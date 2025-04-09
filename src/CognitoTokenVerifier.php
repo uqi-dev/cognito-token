@@ -113,7 +113,7 @@ class CognitoTokenVerifier
      * @return array|false Decoded token payload or false on failure.
      * @throws CognitoTokenException if verification fails.
      */
-    protected function verifyToken(string $jwt)
+    public function verifyToken(string $jwt)
     {
         try {
             // Attempt to unserialize and verify the token
