@@ -67,6 +67,7 @@ $verifier = new CognitoTokenVerifier(
     '6c9hs2p1v53bf9ol5m0o0rlfjj'  // Cognito Client ID
 );
 
+
 // Verify an ID token
 try {
     $payload = $verifier->verifyIdToken($idToken);
@@ -76,9 +77,19 @@ try {
     echo "Token verification failed: " . $e->getMessage();
 }
 
-// Verify an access token
+
+// Verify an ID token
 try {
-    $payload = $verifier->verifyAccessToken($accessToken);
+    $payload = $verifier->verifyIdToken($idToken);
+    // $payload now contains the decoded token claims
+    print_r($payload);
+} catch (CognitoTokenException $e) {
+    echo "Token verification failed: " . $e->getMessage();
+}
+
+// Verify an id|access token
+try {
+    $payload = $verifier->verifyToken($token);
     // $payload now contains the decoded token claims
     print_r($payload);
 } catch (CognitoTokenException $e) {
