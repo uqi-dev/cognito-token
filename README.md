@@ -15,7 +15,7 @@ The `CognitoTokenVerifier` class provides functionality to verify JSON Web Token
 ## Installation
 
 ```bash
-composer require ishanto/cognito-token
+composer require uqi/cognito-token
 ```
 
 ## Requirements
