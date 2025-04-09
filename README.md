@@ -293,14 +293,14 @@ public function __construct(string $region, string $userPoolId, string $clientId
 
 ```php
 /**
-     * Verifies the token's signature and basic claims.
-     *
-     * @param string $jwt The JWT string.
-     * @return array Decoded token payload.
-     * @return array|false Decoded token payload or false on failure.
-     * @throws CognitoTokenException if verification fails.
-     */
-    public function verifyToken(string $jwt): array
+ * Verifies the token's signature and basic claims.
+ *
+ * @param string $jwt The JWT string.
+ * @return array Decoded token payload.
+ * @return array|false Decoded token payload or false on failure.
+ * @throws CognitoTokenException if verification fails.
+ */
+public function verifyToken(string $jwt): array
 
 ```
 
