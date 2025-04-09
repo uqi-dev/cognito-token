@@ -141,28 +141,62 @@ class YourCacheImplementation implements CacheInterface
 For Laravel users, a ready-to-use cache implementation is included with the library:
 
 ```php
-<?php
 
-namespace UQI\Cognito\Tokens;
-
-use UQI\Cognito\Tokens\CacheInterface;
 use Illuminate\Support\Facades\Cache;
+use UQI\Cognito\Tokens\CacheInterface;
 
-class LaravelCache implements CacheInterface
+class LaravelCacheDriver implements CacheInterface
 {
+    /**
+     * The name of the Laravel cache store to use.
+     *
+     * @var string
+     */
+    protected $store;
+
+    /**
+     * Create a new cache driver instance.
+     *
+     * @param string $store Laravel cache store name (e.g., 'file', 'redis', 'memcached').
+     */
+    public function __construct(string $store = 'file')
+    {
+        $this->store = $store;
+    }
+
+    /**
+     * Store a value in the cache for the given number of minutes.
+     *
+     * @param string $key Cache key.
+     * @param mixed $value The value to cache.
+     * @param int $minutes Duration in minutes to keep the item.
+     */
     public function put(string $key, $value, int $minutes)
     {
-        Cache::put($key, $value, $minutes);
+        Cache::store($this->store)->put($key, $value, $minutes);
     }
 
+    /**
+
+     * Retrieve an item from the cache by key.
+     *
+     * @param string $key Cache key.
+     * @return mixed|null The cached value, or null if not found.
+     */
     public function get(string $key)
     {
-        return Cache::get($key);
+        return Cache::store($this->store)->get($key);
     }
 
+    /**
+     * Determine if the given cache key exists.
+     *
+     * @param string $key Cache key.
+     * @return bool True if the key exists in the cache, false otherwise.
+     */
     public function has(string $key): bool
     {
-        return Cache::has($key);
+        return Cache::store($this->store)->has($key);
     }
 }
 ```
@@ -186,20 +220,20 @@ $verifier = new CognitoTokenVerifier(
 
 The library throws `CognitoTokenException` with specific error codes:
 
-| Error Code | Description |
-|------------|-------------|
-| JWKS_FETCH_FAILED | Failed to fetch JWKS from the remote URL |
-| JWKS_INVALID_FORMAT | Invalid JWKS format - 'keys' not found |
-| NO_KID_IN_TOKEN | No 'kid' found in JWT header |
-| NO_JWK_FOR_KID | No matching JWK found for the specified kid |
-| SIGNATURE_VERIFICATION_FAILED | JWT signature verification failed |
-| TOKEN_PAYLOAD_DECODING_FAILED | Failed to decode JWT payload |
-| INVALID_TOKEN | Invalid token |
-| INVALID_ISSUER | Invalid issuer in token |
-| TOKEN_EXPIRED | Token is expired |
-| INVALID_AUDIENCE | Invalid audience in ID token |
-| MISSING_SUBJECT | Missing subject (sub) claim in ID token |
-| INVALID_CLIENT_ID_ACCESS | Invalid client_id in access token |
+| Error Code                    | Description                                 |
+| ----------------------------- | ------------------------------------------- |
+| JWKS_FETCH_FAILED             | Failed to fetch JWKS from the remote URL    |
+| JWKS_INVALID_FORMAT           | Invalid JWKS format - 'keys' not found      |
+| NO_KID_IN_TOKEN               | No 'kid' found in JWT header                |
+| NO_JWK_FOR_KID                | No matching JWK found for the specified kid |
+| SIGNATURE_VERIFICATION_FAILED | JWT signature verification failed           |
+| TOKEN_PAYLOAD_DECODING_FAILED | Failed to decode JWT payload                |
+| INVALID_TOKEN                 | Invalid token                               |
+| INVALID_ISSUER                | Invalid issuer in token                     |
+| TOKEN_EXPIRED                 | Token is expired                            |
+| INVALID_AUDIENCE              | Invalid audience in ID token                |
+| MISSING_SUBJECT               | Missing subject (sub) claim in ID token     |
+| INVALID_CLIENT_ID_ACCESS      | Invalid client_id in access token           |
 
 Example error handling:
 
