@@ -1,0 +1,29 @@
+<?php
+
+use UQI\Cognito\Tokens\CognitoTokenVerifier;
+use UQI\Cognito\Tokens\Exception\CognitoTokenException;
+use Dotenv\Dotenv;
+use Symfony\Component\VarDumper\VarDumper;
+
+require __DIR__ . '/vendor/autoload.php';
+
+// Load the .env file from the current directory
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+
+$token = 'eyJraWQiOiI0Nnd0QVJOUisxbDY3MWdOOHBRWG9FNng4d3NaQzQwVnZOOGxXZzN6WHlFPSIsImFsZyI6IlJTMjU2In0.eyJjdXN0b206dHlwZSI6Im5ldyIsInN1YiI6Ijg0ZTg4NDY4LTkwZDEtNzA1Zi04YzgzLTRlYzA4MGQyNWM0NyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9hUVJVWWZZSlEiLCJjb2duaXRvOnVzZXJuYW1lIjoiODRlODg0NjgtOTBkMS03MDVmLThjODMtNGVjMDgwZDI1YzQ3IiwiZ2l2ZW5fbmFtZSI6IlNoYW50byIsIm9yaWdpbl9qdGkiOiJlOTA4OTEzYy0xZTViLTQwZjAtYmM4ZC1kNGQ1ZTg2ODdhODQiLCJhdWQiOiI2YzloczJwMXY1M2JmOW9sNW0wbzBybGZqaiIsImV2ZW50X2lkIjoiOWU5MzdjNWMtMGI1ZS00MzAyLWFhMjUtYmI5ZDkxYzAwOWVlIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3NDQxODM5MTIsImV4cCI6MTc0NDE4NzUxMiwiaWF0IjoxNzQ0MTgzOTEyLCJmYW1pbHlfbmFtZSI6IklzbGFtIiwianRpIjoiN2E5ZTdkZGMtMWQ0NS00M2UzLWEwYzItMzY3NWQyNjk0NzIxIiwiZW1haWwiOiJpc2hhbnRvNDJAeW9wbWFpbC5jb20ifQ.EAIn38FzHztbRUIZKo_jDUAFsC2Q5CFcFe2T8zGm0kM_x7Jym9imIUgoT79eaH_H1ZDXugZtELY_2G41w6sYwLUshEgkitvomjz_JqE0nTzbtH4L5fMtyFfeicZjI0ssGSlKxDkBZxP1trFRqlQaE3BybenpPecZm3hJ6qlEAdpQLp859MHYWkUZ5M6uoIJ34u9V0XwvQEG5kWFXIrCO67U_crN2h43b5bmR3DoaMXXQsrjYTpvbvUGyXevGxrZh7RPlDr28JuotfajVbzWoCMWxjr68ahNKygDbY1Mem4reKs7vwrqvwlsYjsMsTukA61Xu76C0_pNFqKMgQlnPeA';
+
+
+$cognitoRegion = $_ENV['COGNITO_REGION'];
+$cognitoUserPoolId = $_ENV['COGNITO_USER_POOL_ID'];
+$cognitoClientId = $_ENV['COGNITO_CLIENT_ID'];
+
+$verifier = new CognitoTokenVerifier($cognitoRegion, $cognitoUserPoolId, $cognitoClientId);
+
+try {
+    $payload = $verifier->verifyIdToken($token);
+    VarDumper::dump($payload);
+} catch (CognitoTokenException $err) {
+    VarDumper::dump($err);
+}

@@ -1,0 +1,49 @@
+# Ignore Composer's vendor directory
+/vendor/
+
+# Ignore Composer's lock file for version control (optional, can be kept if needed)
+composer.lock
+
+# Ignore the generated Composer autoload file
+composer.phar
+
+# Ignore node_modules if you're using Node.js for front-end assets
+/node_modules/
+
+# Ignore .env file, which contains sensitive information
+.env
+
+# Ignore IDE or editor specific files
+.idea/
+.vscode/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.log
+*.bak
+*.swp
+
+# Ignore any build or distribution files
+/dist/
+/build/
+
+# Ignore PHPUnit coverage reports
+/coverage/
+
+# Ignore any temporary files or directories
+/tmp/
+/test-output/
+
+# Ignore Composer's cache directory (optional, can be kept for caching purposes)
+.cache/
+
+# Ignore vendor specific files (e.g., JetBrains files, VSCode configurations)
+.idea/
+*.iml
+
+# Ignore MacOS and Windows system files
+*.DS_Store
+Thumbs.db
