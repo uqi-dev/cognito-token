@@ -37,8 +37,8 @@ use UQI\Cognito\Tokens\CognitoTokenVerifier;
 
 $verifier = new CognitoTokenVerifier(
     'us-east-1',              // AWS region
-    'us-east-1_aQRUYfYJQ',    // Cognito User Pool ID
-    '6c9hs2p1v53bf9ol5m0o0rlfjj'  // Cognito Client ID
+    'us-east-1_example',    // Cognito User Pool ID
+    'example'  // Cognito Client ID
 );
 
 $payload = $verifier->verifyIdToken($idToken);
@@ -64,7 +64,7 @@ use UQI\Cognito\Tokens\Exception\CognitoTokenException;
 $verifier = new CognitoTokenVerifier(
     'us-east-1',              // AWS region
     'us-east-1_aQRUYfYJQ',    // Cognito User Pool ID
-    '6c9hs2p1v53bf9ol5m0o0rlfjj'  // Cognito Client ID
+    'example'  // Cognito Client ID
 );
 
 
@@ -112,7 +112,7 @@ $cache = new YourCacheImplementation();
 $verifier = new CognitoTokenVerifier(
     'us-east-1',              // AWS region
     'us-east-1_aQRUYfYJQ',    // Cognito User Pool ID
-    '6c9hs2p1v53bf9ol5m0o0rlfjj',  // Cognito Client ID
+    'example',  // Cognito Client ID
     $cache                    // Cache implementation
 );
 ```
